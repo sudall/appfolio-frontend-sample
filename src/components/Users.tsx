@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import UsersTable from 'components/UsersTable';
-import { CircularProgress, Flex } from '@chakra-ui/core/dist';
+import {
+    Box,
+    CircularProgress,
+    Flex,
+    Text,
+    Heading
+} from '@chakra-ui/core/dist';
 import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
+
+const totalUsers = 500;
 
 const getUsers = async (
     page: number,
@@ -13,7 +21,8 @@ const getUsers = async (
 ): Promise<GetUsersResult> => {
     const query = QueryString.stringify({
         results: pageSize,
-        page
+        page,
+        seed: 'a'
     });
 
     const response = await fetch(`https://randomuser.me/api/?${query}`);
@@ -25,7 +34,7 @@ const Users: FunctionComponent = () => {
 
     const [asyncState, trigger] = useAsync(async () => {
         return getUsers(currentPage, 10);
-    });
+    }, [currentPage]);
 
     useEffectOnce(() => {
         trigger();
@@ -39,8 +48,11 @@ const Users: FunctionComponent = () => {
             px={5}
             flexDirection={'column'}
         >
+            <Heading>Users ({totalUsers})</Heading>
             {asyncState.state === 'pending' && (
-                <CircularProgress isIndeterminate></CircularProgress>
+                <Flex justifyContent={'center'}>
+                    <CircularProgress isIndeterminate />
+                </Flex>
             )}
             {asyncState.lastResult != null &&
                 asyncState.lastResult.results != null && (

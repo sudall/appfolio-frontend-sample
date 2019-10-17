@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GetUsersResult } from 'data/types/RandomUserApi';
+import { Link } from '@chakra-ui/core';
 
 export type Props = {
     data: Required<GetUsersResult>['results'];
@@ -21,7 +22,11 @@ function UsersTable({ data }: Props) {
                         <tr>
                             <td>{item.name.first}</td>
                             <td>{item.name.last}</td>
-                            <td>{item.email}</td>
+                            <td>
+                                <Link href={`mailto:${item.email}`}>
+                                    {item.email}
+                                </Link>
+                            </td>
                         </tr>
                     );
                 })}
@@ -31,42 +36,3 @@ function UsersTable({ data }: Props) {
 }
 
 export default UsersTable;
-
-// import * as React from 'react';
-// import { ReactNode } from 'react';
-//
-// export type Props<TData> = {
-//     data: TData[];
-//     columns: {
-//         key: string;
-//         headerRenderer: () => ReactNode;
-//         cellRenderer: (item: TData) => ReactNode;
-//     }[];
-// };
-//
-// function UsersTable<TData>({ data, columns }: Props<TData>) {
-//     return (
-//         <table>
-//             <thead>
-//                 <tr>
-//                     {columns.map(column => {
-//                         return <th>{column.headerRenderer()}</th>;
-//                     })}
-//                 </tr>
-//             </thead>
-//             <tbody>
-//                 {data.map(item => {
-//                     return (
-//                         <tr>
-//                             {columns.map(column => {
-//                                 return <td>{column.cellRenderer()}</td>;
-//                             })}
-//                         </tr>
-//                     );
-//                 })}
-//             </tbody>
-//         </table>
-//     );
-// }
-//
-// export default UsersTable;

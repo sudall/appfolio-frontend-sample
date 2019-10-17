@@ -6,6 +6,7 @@ import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
+import Pagination from 'components/Pagination';
 
 const totalUsers = 500;
 const pageSize = 10;
@@ -37,6 +38,8 @@ const Users: FunctionComponent = () => {
 
     const firstItemIndex = (currentPage - 1) * pageSize + 1;
 
+    const totalPages = Math.ceil(totalUsers / pageSize);
+
     return (
         <Flex
             maxWidth={'2xl'}
@@ -64,6 +67,13 @@ const Users: FunctionComponent = () => {
                                 asyncState.lastResult.info.results -
                                 1} of ${totalUsers}`}
                         </Text>
+                        <Pagination
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            onPageChange={newPage => {
+                                setCurrentPage(newPage);
+                            }}
+                        />
                     </>
                 )}
         </Flex>

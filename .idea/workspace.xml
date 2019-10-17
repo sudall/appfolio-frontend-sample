@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4056a420-094b-467c-9cb1-7613e4539e1c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Users.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,7 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1571338247969</updated>
       <workItem from="1571338249245" duration="3296000" />
-      <workItem from="1571341809468" duration="6472000" />
+      <workItem from="1571341809468" duration="6602000" />
     </task>
     <task id="LOCAL-00001" summary="cleanup work">
       <created>1571340219614</created>
@@ -109,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571346412695</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="page info">
+      <created>1571348317656</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1571348317656</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +140,7 @@
     <MESSAGE value="cleanup work" />
     <MESSAGE value="data retrieval" />
     <MESSAGE value="header and email link" />
-    <option name="LAST_COMMIT_MESSAGE" value="header and email link" />
+    <MESSAGE value="page info" />
+    <option name="LAST_COMMIT_MESSAGE" value="page info" />
   </component>
 </project>

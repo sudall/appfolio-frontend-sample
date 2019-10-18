@@ -4,6 +4,7 @@ import {
     Alert,
     AlertIcon,
     CircularProgress,
+    Flex,
     Heading,
     Text
 } from '@chakra-ui/core/dist';
@@ -44,7 +45,13 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
     const totalPages = Math.ceil(totalUsers / pageSize);
 
     return (
-        <Stack width={'2xl'} mx={'auto'} p={4} flexDirection={'column'}>
+        <Stack
+            maxWidth={'2xl'}
+            minWidth={'fit-content'}
+            mx={'auto'}
+            p={4}
+            flexDirection={'column'}
+        >
             <Stack
                 backgroundColor={'gray.700'}
                 p={4}
@@ -79,16 +86,12 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
                                 }}
                                 data={asyncState.lastResult.results}
                             />
-                            <Stack
-                                isInline
-                                justifyContent={'space-between'}
-                                alignItems={'center'}
-                            >
-                                <Text color={'gray.400'}>
-                                    {`Displaying: ${firstItemIndex}-${firstItemIndex +
-                                        asyncState.lastResult.info.results -
-                                        1} of ${totalUsers}`}
-                                </Text>
+                            <Text color={'gray.400'}>
+                                {`Displaying: ${firstItemIndex}-${firstItemIndex +
+                                    asyncState.lastResult.info.results -
+                                    1} of ${totalUsers}`}
+                            </Text>
+                            <Flex justifyContent={'center'}>
                                 <PagePicker
                                     totalPages={totalPages}
                                     currentPage={currentPage}
@@ -97,7 +100,7 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
                                         trigger();
                                     }}
                                 />
-                            </Stack>
+                            </Flex>
                         </Stack>
                     )}
             </Stack>

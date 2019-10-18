@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, useMemo } from 'react';
-import { Box, BoxProps, Button, Flex, IconButton } from '@chakra-ui/core/dist';
+import { BoxProps, Button, IconButton } from '@chakra-ui/core/dist';
 import Stack from 'components/Stack';
 
 type Props = {

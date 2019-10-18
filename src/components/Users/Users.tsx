@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
-import UsersTable, { SortDirection, SortKey } from 'components/UsersTable';
 import {
     Alert,
     AlertIcon,
@@ -11,8 +10,12 @@ import {
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import Stack from 'components/Stack';
-import PagePicker from './PagePicker';
 import { Api } from 'data/api';
+import PagePicker from 'components/PagePicker/PagePicker';
+import UsersTable, {
+    SortDirection,
+    SortKey
+} from 'components/UsersTable/UsersTable';
 
 const totalUsers = 500;
 const pageSize = 10;

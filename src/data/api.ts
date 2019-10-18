@@ -1,8 +1,8 @@
-import { SortDirection, SortKey } from 'components/UsersTable';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import * as QueryString from 'querystring';
 import SystemUtils from 'utils/SystemUtils';
 import FakeData from 'data/FakeData';
+import { SortDirection, SortKey } from 'components/UsersTable/UsersTable';
 
 const api = {
     getUsers: async (

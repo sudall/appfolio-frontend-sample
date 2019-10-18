@@ -49,6 +49,7 @@ const Pagination: FunctionComponent<Props> = ({
                     icon='chevron-left'
                     onClick={() => onPageChange(currentPage - 1)}
                     isDisabled={currentPage - 1 < 1}
+                    marginLeft={1}
                 />
                 {pagesToShow.map(page => {
                     return (
@@ -58,6 +59,7 @@ const Pagination: FunctionComponent<Props> = ({
                                 page === currentPage ? 'green' : undefined
                             }
                             onClick={() => onPageChange(page)}
+                            marginLeft={1}
                         >
                             {page}
                         </Button>
@@ -68,12 +70,14 @@ const Pagination: FunctionComponent<Props> = ({
                     icon='chevron-right'
                     onClick={() => onPageChange(currentPage + 1)}
                     isDisabled={currentPage + 1 > totalPages}
+                    marginLeft={1}
                 />
                 <IconButton
                     aria-label='last page'
                     icon='arrow-right'
                     onClick={() => onPageChange(totalPages)}
                     isDisabled={currentPage === totalPages}
+                    marginLeft={1}
                 />
             </Flex>
         </Box>

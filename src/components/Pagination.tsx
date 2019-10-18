@@ -36,51 +36,49 @@ const Pagination: FunctionComponent<Props> = ({
     }, [firstPage, lastPage]);
 
     return (
-        <Box {...boxProps}>
-            <Flex>
-                <IconButton
-                    aria-label='first page'
-                    icon='arrow-left'
-                    onClick={() => onPageChange(1)}
-                    isDisabled={currentPage === 1}
-                />
-                <IconButton
-                    aria-label='previous page'
-                    icon='chevron-left'
-                    onClick={() => onPageChange(currentPage - 1)}
-                    isDisabled={currentPage - 1 < 1}
-                    marginLeft={1}
-                />
-                {pagesToShow.map(page => {
-                    return (
-                        <Button
-                            key={page}
-                            variantColor={
-                                page === currentPage ? 'green' : undefined
-                            }
-                            onClick={() => onPageChange(page)}
-                            marginLeft={1}
-                        >
-                            {page}
-                        </Button>
-                    );
-                })}
-                <IconButton
-                    aria-label='next page'
-                    icon='chevron-right'
-                    onClick={() => onPageChange(currentPage + 1)}
-                    isDisabled={currentPage + 1 > totalPages}
-                    marginLeft={1}
-                />
-                <IconButton
-                    aria-label='last page'
-                    icon='arrow-right'
-                    onClick={() => onPageChange(totalPages)}
-                    isDisabled={currentPage === totalPages}
-                    marginLeft={1}
-                />
-            </Flex>
-        </Box>
+        <Flex {...boxProps}>
+            <IconButton
+                aria-label='first page'
+                icon='arrow-left'
+                onClick={() => onPageChange(1)}
+                isDisabled={currentPage === 1}
+            />
+            <IconButton
+                aria-label='previous page'
+                icon='chevron-left'
+                onClick={() => onPageChange(currentPage - 1)}
+                isDisabled={currentPage - 1 < 1}
+                marginLeft={1}
+            />
+            {pagesToShow.map(page => {
+                return (
+                    <Button
+                        key={page}
+                        variantColor={
+                            page === currentPage ? 'green' : undefined
+                        }
+                        onClick={() => onPageChange(page)}
+                        marginLeft={1}
+                    >
+                        {page}
+                    </Button>
+                );
+            })}
+            <IconButton
+                aria-label='next page'
+                icon='chevron-right'
+                onClick={() => onPageChange(currentPage + 1)}
+                isDisabled={currentPage + 1 > totalPages}
+                marginLeft={1}
+            />
+            <IconButton
+                aria-label='last page'
+                icon='arrow-right'
+                onClick={() => onPageChange(totalPages)}
+                isDisabled={currentPage === totalPages}
+                marginLeft={1}
+            />
+        </Flex>
     );
 };
 

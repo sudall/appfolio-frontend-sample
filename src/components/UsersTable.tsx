@@ -17,41 +17,35 @@ const TableDataCell: FC<BoxProps> = props => <Box p={2} {...props} as={'td'} />;
 
 function UsersTable({ data, onSort, ...boxProps }: Props) {
     return (
-        <Box {...boxProps}>
-            <Box as={'table'} width={'100%'}>
-                <thead>
-                    <Box
-                        as={'tr'}
-                        textAlign={'left'}
-                        backgroundColor={'gray.900'}
-                    >
-                        <TableHeaderCell>First</TableHeaderCell>
-                        <TableHeaderCell>Last</TableHeaderCell>
-                        <TableHeaderCell>Email</TableHeaderCell>
-                    </Box>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => {
-                        return (
-                            <Box
-                                as={'tr'}
-                                key={item.email}
-                                backgroundColor={
-                                    index % 2 === 0 ? 'gray.800' : 'gray.700'
-                                }
-                            >
-                                <TableDataCell>{item.name.first}</TableDataCell>
-                                <TableDataCell>{item.name.last}</TableDataCell>
-                                <TableDataCell>
-                                    <Link href={`mailto:${item.email}`}>
-                                        {item.email}
-                                    </Link>
-                                </TableDataCell>
-                            </Box>
-                        );
-                    })}
-                </tbody>
-            </Box>
+        <Box as={'table'} width={'100%'} {...boxProps}>
+            <thead>
+                <Box as={'tr'} textAlign={'left'} backgroundColor={'gray.900'}>
+                    <TableHeaderCell>First</TableHeaderCell>
+                    <TableHeaderCell>Last</TableHeaderCell>
+                    <TableHeaderCell>Email</TableHeaderCell>
+                </Box>
+            </thead>
+            <tbody>
+                {data.map((item, index) => {
+                    return (
+                        <Box
+                            as={'tr'}
+                            key={item.email}
+                            backgroundColor={
+                                index % 2 === 0 ? 'gray.800' : 'gray.700'
+                            }
+                        >
+                            <TableDataCell>{item.name.first}</TableDataCell>
+                            <TableDataCell>{item.name.last}</TableDataCell>
+                            <TableDataCell>
+                                <Link href={`mailto:${item.email}`}>
+                                    {item.email}
+                                </Link>
+                            </TableDataCell>
+                        </Box>
+                    );
+                })}
+            </tbody>
         </Box>
     );
 }

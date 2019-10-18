@@ -24,10 +24,10 @@ const Stack: FC<StackProps> = ({
         flexDirection = direction;
     }
 
-    const validChildren: ReactNode[] = [];
+    let lastValidChild: ReactNode = null;
     Children.forEach(children, child => {
         if (isValidElement(child)) {
-            validChildren.push(child);
+            lastValidChild = child;
         }
     });
 
@@ -40,8 +40,7 @@ const Stack: FC<StackProps> = ({
         >
             {Children.map(children, (child, index) => {
                 if (!isValidElement(child)) return;
-                let isLastChild =
-                    validChildren[validChildren.length - 1] === child;
+                let isLastChild = lastValidChild === child;
                 // @ts-ignore
                 const isHorizontalDirection = direction === 'horizontal';
                 let spacingProps = {};

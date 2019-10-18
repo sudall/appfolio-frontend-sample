@@ -32,7 +32,7 @@ const Users: FunctionComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [asyncState, trigger] = useAsync(async () => {
-        await SystemUtils.setTimeout(1500000);
+        await SystemUtils.setTimeout(2000);
         return getUsers(currentPage, pageSize);
     }, [currentPage]);
 

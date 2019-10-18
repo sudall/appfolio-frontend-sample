@@ -116,13 +116,7 @@ const Users: FunctionComponent = () => {
     const totalPages = Math.ceil(totalUsers / pageSize);
 
     return (
-        <Flex
-            maxWidth={'2xl'}
-            mx={'auto'}
-            py={8}
-            px={5}
-            flexDirection={'column'}
-        >
+        <Stack width={'2xl'} mx={'auto'} p={4} flexDirection={'column'}>
             <Stack
                 backgroundColor={'gray.700'}
                 p={4}
@@ -179,7 +173,7 @@ const Users: FunctionComponent = () => {
                         </Stack>
                     )}
             </Stack>
-        </Flex>
+        </Stack>
     );
 };
 

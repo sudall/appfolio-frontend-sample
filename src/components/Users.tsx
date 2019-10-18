@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
-import UsersTable from 'components/UsersTable';
+import UsersTable, { SortDirection, SortKey } from 'components/UsersTable';
 import { CircularProgress, Flex, Heading, Text } from '@chakra-ui/core/dist';
 import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
@@ -30,6 +30,10 @@ const getUsers = async (
 
 const Users: FunctionComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortDirection, setSortDirection] = useState<SortDirection>(
+        'unsorted'
+    );
+    const [sortBy, setSortBy] = useState<SortKey>('first');
 
     const [asyncState, trigger] = useAsync(async () => {
         // await SystemUtils.setTimeout(2000);
@@ -68,7 +72,14 @@ const Users: FunctionComponent = () => {
                     asyncState.lastResult.results != null && (
                         <Stack>
                             <UsersTable
-                                onSort={() => {}}
+                                onSort={(sortBy, sortDirection) => {
+                                    setSortBy(sortBy);
+                                    setSortDirection(sortDirection);
+                                }}
+                                sort={{
+                                    sortDirection,
+                                    sortBy
+                                }}
                                 data={asyncState.lastResult.results}
                             />
                             <Stack

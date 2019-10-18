@@ -85,7 +85,7 @@ const Users: FunctionComponent = () => {
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                             >
-                                <Text color={'gray.400'} marginBottom={2}>
+                                <Text color={'gray.400'}>
                                     {`Displaying: ${firstItemIndex}-${firstItemIndex +
                                         asyncState.lastResult.info.results -
                                         1} of ${totalUsers}`}

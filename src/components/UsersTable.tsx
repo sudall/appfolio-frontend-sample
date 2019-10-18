@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import { Link } from '@chakra-ui/core';
-import { Box, BoxProps, theme } from '@chakra-ui/core/dist';
+import { Box, BoxProps } from '@chakra-ui/core/dist';
+import { FC } from 'react';
 
 export type SortKey = 'first' | 'last' | 'email';
 export type Props = {
@@ -9,54 +10,48 @@ export type Props = {
     onSort: (sortBy: SortKey) => void;
 } & BoxProps;
 
-function UsersTable({ data, onSort, ...boxProps }: Props) {
-    // @ts-ignore
-    const evenRowColor: string = theme.colors['gray']['800'];
-    // @ts-ignore
-    const headerRowColor: string = theme.colors['gray']['900'];
+const TableHeaderCell: FC<BoxProps> = props => (
+    <Box p={2} {...props} as={'th'} />
+);
+const TableDataCell: FC<BoxProps> = props => <Box p={2} {...props} as={'td'} />;
 
+function UsersTable({ data, onSort, ...boxProps }: Props) {
     return (
         <Box {...boxProps}>
-            <table
-                style={{
-                    width: '100%'
-                }}
-            >
+            <Box as={'table'} width={'100%'}>
                 <thead>
-                    <tr
-                        style={{
-                            backgroundColor: headerRowColor
-                        }}
+                    <Box
+                        as={'tr'}
+                        textAlign={'left'}
+                        backgroundColor={'gray.900'}
                     >
-                        <th>First</th>
-                        <th>Last</th>
-                        <th>Email</th>
-                    </tr>
+                        <TableHeaderCell>First</TableHeaderCell>
+                        <TableHeaderCell>Last</TableHeaderCell>
+                        <TableHeaderCell>Email</TableHeaderCell>
+                    </Box>
                 </thead>
                 <tbody>
                     {data.map((item, index) => {
                         return (
-                            <tr
+                            <Box
+                                as={'tr'}
                                 key={item.email}
-                                style={{
-                                    backgroundColor:
-                                        index % 2 === 0
-                                            ? evenRowColor
-                                            : undefined
-                                }}
+                                backgroundColor={
+                                    index % 2 === 0 ? 'gray.800' : 'gray.700'
+                                }
                             >
-                                <td>{item.name.first}</td>
-                                <td>{item.name.last}</td>
-                                <td>
+                                <TableDataCell>{item.name.first}</TableDataCell>
+                                <TableDataCell>{item.name.last}</TableDataCell>
+                                <TableDataCell>
                                     <Link href={`mailto:${item.email}`}>
                                         {item.email}
                                     </Link>
-                                </td>
-                            </tr>
+                                </TableDataCell>
+                            </Box>
                         );
                     })}
                 </tbody>
-            </table>
+            </Box>
         </Box>
     );
 }

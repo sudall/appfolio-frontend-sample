@@ -1,13 +1,22 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import UsersTable, { SortDirection, SortKey } from 'components/UsersTable';
-import { CircularProgress, Flex, Heading, Text } from '@chakra-ui/core/dist';
+import {
+    Alert,
+    AlertIcon,
+    CircularProgress,
+    Flex,
+    Heading,
+    Text
+} from '@chakra-ui/core/dist';
 import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import Stack from 'components/Stack';
 import PagePicker from './PagePicker';
+import SystemUtils from 'utils/SystemUtils';
+import FakeData from 'data/FakeData';
 
 const totalUsers = 500;
 const pageSize = 10;
@@ -33,15 +42,19 @@ const getUsers = async (
         const response = await fetch(`${endpoint}?${query}`);
         return response.json();
     } else {
-        const query = QueryString.stringify({
-            // get all 500 since there is no backend sorting available
-            results: totalUsers,
-            inc: include,
-            seed
-        });
-
-        const response = await fetch(`${endpoint}?${query}`);
-        const result: GetUsersResult = await response.json();
+        // TODO I was running into fetch limits on the randomuser API with this
+        //  code, so instead I'm just faking the response.
+        // const query = QueryString.stringify({
+        //     // get all 500 since there is no backend sorting available
+        //     results: totalUsers,
+        //     inc: include,
+        //     seed
+        // });
+        //
+        // const response = await fetch(`${endpoint}?${query}`);
+        // const result: GetUsersResult = await response.json();
+        await SystemUtils.setTimeout(500);
+        const result: GetUsersResult = FakeData.allUsersResponse;
 
         if (result.results != null) {
             const pageFirstItemIndex = (page - 1) * pageSize;
@@ -122,6 +135,12 @@ const Users: FunctionComponent = () => {
                         <CircularProgress size={'2xl'} isIndeterminate />
                     )}
                 </Stack>
+                {asyncState.state === 'error' && asyncState.lastError != null && (
+                    <Alert status='error'>
+                        <AlertIcon />
+                        {asyncState.lastError.message}
+                    </Alert>
+                )}
                 {asyncState.lastResult != null &&
                     asyncState.lastResult.results != null && (
                         <Stack>
@@ -129,6 +148,7 @@ const Users: FunctionComponent = () => {
                                 onSort={(sortBy, sortDirection) => {
                                     setSortBy(sortBy);
                                     setSortDirection(sortDirection);
+                                    setCurrentPage(1);
                                     trigger();
                                 }}
                                 sort={{

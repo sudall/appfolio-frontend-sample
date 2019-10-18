@@ -6,9 +6,9 @@ import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
-import Pagination from 'components/Pagination';
 import Stack from 'components/Stack';
 import SystemUtils from 'utils/SystemUtils';
+import PagePicker from './PagePicker';
 
 const totalUsers = 500;
 const pageSize = 10;
@@ -81,7 +81,7 @@ const Users: FunctionComponent = () => {
                                         asyncState.lastResult.info.results -
                                         1} of ${totalUsers}`}
                                 </Text>
-                                <Pagination
+                                <PagePicker
                                     totalPages={totalPages}
                                     currentPage={currentPage}
                                     onPageChange={newPage => {

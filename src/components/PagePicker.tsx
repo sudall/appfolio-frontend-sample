@@ -9,7 +9,7 @@ type Props = {
     onPageChange: (newPage: number) => void;
 } & BoxProps;
 
-const Pagination: FunctionComponent<Props> = ({
+const PagePicker: FunctionComponent<Props> = ({
     currentPage,
     onPageChange,
     totalPages,
@@ -75,4 +75,4 @@ const Pagination: FunctionComponent<Props> = ({
     );
 };
 
-export default Pagination;
+export default PagePicker;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import { Link } from '@chakra-ui/core';
-import { Box, BoxProps } from '@chakra-ui/core/dist';
+import { Box, BoxProps, theme } from '@chakra-ui/core/dist';
 
 export type SortKey = 'first' | 'last' | 'email';
 export type Props = {
@@ -10,6 +10,11 @@ export type Props = {
 } & BoxProps;
 
 function UsersTable({ data, onSort, ...boxProps }: Props) {
+    // @ts-ignore
+    const evenRowColor: string = theme.colors['gray']['800'];
+    // @ts-ignore
+    const headerRowColor: string = theme.colors['gray']['900'];
+
     return (
         <Box {...boxProps}>
             <table
@@ -18,7 +23,11 @@ function UsersTable({ data, onSort, ...boxProps }: Props) {
                 }}
             >
                 <thead>
-                    <tr>
+                    <tr
+                        style={{
+                            backgroundColor: headerRowColor
+                        }}
+                    >
                         <th>First</th>
                         <th>Last</th>
                         <th>Email</th>
@@ -27,7 +36,15 @@ function UsersTable({ data, onSort, ...boxProps }: Props) {
                 <tbody>
                     {data.map((item, index) => {
                         return (
-                            <tr key={item.email}>
+                            <tr
+                                key={item.email}
+                                style={{
+                                    backgroundColor:
+                                        index % 2 === 0
+                                            ? evenRowColor
+                                            : undefined
+                                }}
+                            >
                                 <td>{item.name.first}</td>
                                 <td>{item.name.last}</td>
                                 <td>

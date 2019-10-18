@@ -58,8 +58,7 @@ const Users: FunctionComponent = () => {
             flexDirection={'column'}
         >
             <Box
-                // backgroundColor={'gray.700'}
-                borderWidth={1}
+                backgroundColor={'gray.700'}
                 p={4}
                 borderRadius={'lg'}
                 shadow={'lg'}

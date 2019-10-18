@@ -14,8 +14,18 @@ const Pagination: FunctionComponent<Props> = ({
     totalPages,
     ...boxProps
 }) => {
-    const firstPage = Math.max(currentPage - 2, 1);
-    const lastPage = Math.min(firstPage + 4, totalPages);
+    let firstPage = currentPage - 2;
+    let lastPage = currentPage + 2;
+
+    if (firstPage < 1) {
+        firstPage = 1;
+        lastPage = Math.min(firstPage + 4, totalPages);
+    }
+
+    if (lastPage > totalPages) {
+        lastPage = totalPages;
+        firstPage = Math.max(lastPage - 4, 1);
+    }
 
     const pagesToShow = useMemo(() => {
         const result = [];

@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import UsersTable from 'components/UsersTable';
-import { CircularProgress, Flex, Heading, Text } from '@chakra-ui/core/dist';
+import {
+    Box,
+    CircularProgress,
+    Flex,
+    Heading,
+    Text
+} from '@chakra-ui/core/dist';
 import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import Pagination from 'components/Pagination';
+import SystemUtils from 'utils/SystemUtils';
 
 const totalUsers = 500;
 const pageSize = 10;
@@ -18,6 +25,7 @@ const getUsers = async (
     const query = QueryString.stringify({
         results: pageSize,
         page,
+        inc: 'name,email',
         seed: 'a'
     });
 
@@ -29,6 +37,7 @@ const Users: FunctionComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [asyncState, trigger] = useAsync(async () => {
+        // await SystemUtils.setTimeout(3000);
         return getUsers(currentPage, pageSize);
     }, [currentPage]);
 
@@ -48,34 +57,53 @@ const Users: FunctionComponent = () => {
             px={5}
             flexDirection={'column'}
         >
-            <Flex alignItems={'center'}>
-                <Heading>Users ({totalUsers})</Heading>
-                {asyncState.state === 'pending' && (
-                    <CircularProgress
-                        size={'2xl'}
-                        marginLeft={2}
-                        isIndeterminate
-                    />
-                )}
-            </Flex>
-            {asyncState.lastResult != null &&
-                asyncState.lastResult.results != null && (
-                    <>
-                        <UsersTable data={asyncState.lastResult.results} />
-                        <Text>
-                            {`Displaying: ${firstItemIndex}-${firstItemIndex +
-                                asyncState.lastResult.info.results -
-                                1} of ${totalUsers}`}
-                        </Text>
-                        <Pagination
-                            totalPages={totalPages}
-                            currentPage={currentPage}
-                            onPageChange={newPage => {
-                                setCurrentPage(newPage);
-                            }}
+            <Box
+                // backgroundColor={'gray.700'}
+                borderWidth={1}
+                p={4}
+                borderRadius={'lg'}
+                shadow={'lg'}
+            >
+                <Flex alignItems={'center'}>
+                    <Heading marginBottom={2}>Users ({totalUsers})</Heading>
+                    {asyncState.state === 'pending' && (
+                        <CircularProgress
+                            size={'2xl'}
+                            marginLeft={2}
+                            isIndeterminate
                         />
-                    </>
-                )}
+                    )}
+                </Flex>
+                {asyncState.lastResult != null &&
+                    asyncState.lastResult.results != null && (
+                        <>
+                            <UsersTable
+                                onSort={() => {}}
+                                marginBottom={2}
+                                data={asyncState.lastResult.results}
+                            />
+                            <Flex
+                                justifyContent={'space-between'}
+                                alignItems={'center'}
+                            >
+                                <Text color={'gray.400'} marginBottom={2}>
+                                    {`Displaying: ${firstItemIndex}-${firstItemIndex +
+                                        asyncState.lastResult.info.results -
+                                        1} of ${totalUsers}`}
+                                </Text>
+                                <Pagination
+                                    marginLeft={2}
+                                    totalPages={totalPages}
+                                    currentPage={currentPage}
+                                    onPageChange={newPage => {
+                                        setCurrentPage(newPage);
+                                        trigger();
+                                    }}
+                                />
+                            </Flex>
+                        </>
+                    )}
+            </Box>
         </Flex>
     );
 };

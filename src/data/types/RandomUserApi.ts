@@ -3,18 +3,18 @@ export interface GetUsersResult {
     info: Info;
 }
 export interface ResultsEntity {
-    gender: string;
+    // gender: string;
     name: Name;
-    location: Location;
+    // location: Location;
     email: string;
-    login: Login;
-    dob: DobOrRegistered;
-    registered: DobOrRegistered;
-    phone: string;
-    cell: string;
-    id: Id;
-    picture: Picture;
-    nat: string;
+    // login: Login;
+    // dob: DobOrRegistered;
+    // registered: DobOrRegistered;
+    // phone: string;
+    // cell: string;
+    // id: Id;
+    // picture: Picture;
+    // nat: string;
 }
 export interface Name {
     title: string;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FunctionComponent, useMemo } from 'react';
 import { Box, BoxProps, Button, Flex, IconButton } from '@chakra-ui/core/dist';
+import Stack from 'components/Stack';
 
 type Props = {
     totalPages: number;
@@ -36,7 +37,7 @@ const Pagination: FunctionComponent<Props> = ({
     }, [firstPage, lastPage]);
 
     return (
-        <Flex {...boxProps}>
+        <Stack isInline spacing={1} {...boxProps}>
             <IconButton
                 aria-label='first page'
                 icon='arrow-left'
@@ -48,37 +49,29 @@ const Pagination: FunctionComponent<Props> = ({
                 icon='chevron-left'
                 onClick={() => onPageChange(currentPage - 1)}
                 isDisabled={currentPage - 1 < 1}
-                marginLeft={1}
             />
-            {pagesToShow.map(page => {
-                return (
-                    <Button
-                        key={page}
-                        variantColor={
-                            page === currentPage ? 'green' : undefined
-                        }
-                        onClick={() => onPageChange(page)}
-                        marginLeft={1}
-                    >
-                        {page}
-                    </Button>
-                );
-            })}
+            {pagesToShow.map(page => (
+                <Button
+                    key={page}
+                    variantColor={page === currentPage ? 'green' : undefined}
+                    onClick={() => onPageChange(page)}
+                >
+                    {page}
+                </Button>
+            ))}
             <IconButton
                 aria-label='next page'
                 icon='chevron-right'
                 onClick={() => onPageChange(currentPage + 1)}
                 isDisabled={currentPage + 1 > totalPages}
-                marginLeft={1}
             />
             <IconButton
                 aria-label='last page'
                 icon='arrow-right'
                 onClick={() => onPageChange(totalPages)}
                 isDisabled={currentPage === totalPages}
-                marginLeft={1}
             />
-        </Flex>
+        </Stack>
     );
 };
 

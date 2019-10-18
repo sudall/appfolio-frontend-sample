@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import UsersTable from 'components/UsersTable';
-import {
-    Box,
-    CircularProgress,
-    Flex,
-    Heading,
-    Text
-} from '@chakra-ui/core/dist';
+import { CircularProgress, Flex, Heading, Text } from '@chakra-ui/core/dist';
 import * as QueryString from 'querystring';
 import useAsync from 'hooks/useAsync';
 import { useEffectOnce } from 'react-use';
 import { GetUsersResult } from 'data/types/RandomUserApi';
 import Pagination from 'components/Pagination';
+import Stack from 'components/Stack';
 import SystemUtils from 'utils/SystemUtils';
 
 const totalUsers = 500;
@@ -37,7 +32,7 @@ const Users: FunctionComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [asyncState, trigger] = useAsync(async () => {
-        // await SystemUtils.setTimeout(3000);
+        await SystemUtils.setTimeout(1500000);
         return getUsers(currentPage, pageSize);
     }, [currentPage]);
 
@@ -57,31 +52,27 @@ const Users: FunctionComponent = () => {
             px={5}
             flexDirection={'column'}
         >
-            <Box
+            <Stack
                 backgroundColor={'gray.700'}
                 p={4}
                 borderRadius={'lg'}
                 shadow={'lg'}
             >
-                <Flex alignItems={'center'}>
-                    <Heading marginBottom={2}>Users ({totalUsers})</Heading>
+                <Stack isInline alignItems={'center'}>
+                    <Heading>Users ({totalUsers})</Heading>
                     {asyncState.state === 'pending' && (
-                        <CircularProgress
-                            size={'2xl'}
-                            marginLeft={2}
-                            isIndeterminate
-                        />
+                        <CircularProgress size={'2xl'} isIndeterminate />
                     )}
-                </Flex>
+                </Stack>
                 {asyncState.lastResult != null &&
                     asyncState.lastResult.results != null && (
-                        <>
+                        <Stack>
                             <UsersTable
                                 onSort={() => {}}
-                                marginBottom={2}
                                 data={asyncState.lastResult.results}
                             />
-                            <Flex
+                            <Stack
+                                isInline
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                             >
@@ -91,7 +82,6 @@ const Users: FunctionComponent = () => {
                                         1} of ${totalUsers}`}
                                 </Text>
                                 <Pagination
-                                    marginLeft={2}
                                     totalPages={totalPages}
                                     currentPage={currentPage}
                                     onPageChange={newPage => {
@@ -99,10 +89,10 @@ const Users: FunctionComponent = () => {
                                         trigger();
                                     }}
                                 />
-                            </Flex>
-                        </>
+                            </Stack>
+                        </Stack>
                     )}
-            </Box>
+            </Stack>
         </Flex>
     );
 };

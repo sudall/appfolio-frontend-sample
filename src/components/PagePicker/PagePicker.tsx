@@ -39,12 +39,14 @@ const PagePicker: FunctionComponent<Props> = ({
     return (
         <Stack isInline spacing={1} {...boxProps}>
             <IconButton
+                data-name={'firstPageButton'}
                 aria-label='first page'
                 icon='arrow-left'
                 onClick={() => onPageChange(1)}
                 isDisabled={currentPage === 1}
             />
             <IconButton
+                data-name={'previousPageButton'}
                 aria-label='previous page'
                 icon='chevron-left'
                 onClick={() => onPageChange(currentPage - 1)}
@@ -60,12 +62,14 @@ const PagePicker: FunctionComponent<Props> = ({
                 </Button>
             ))}
             <IconButton
+                data-name={'nextPageButton'}
                 aria-label='next page'
                 icon='chevron-right'
                 onClick={() => onPageChange(currentPage + 1)}
                 isDisabled={currentPage + 1 > totalPages}
             />
             <IconButton
+                data-name={'lastPageButton'}
                 aria-label='last page'
                 icon='arrow-right'
                 onClick={() => onPageChange(totalPages)}

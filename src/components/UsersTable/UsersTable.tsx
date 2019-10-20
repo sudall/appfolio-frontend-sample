@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 export type SortDirection = 'unsorted' | 'ascending' | 'descending';
 export type SortKey = 'first' | 'last' | 'email';
-export type Props = {
+type Props = {
     data: Required<GetUsersResult>['results'];
     onSort: (sortBy: SortKey, sortDirection: SortDirection) => void;
     sort: {

@@ -24,6 +24,33 @@ describe('<PagePicker/>', () => {
     });
 
     describe('firstPageButton', () => {
+        const findFirstPageButton = TestUtils.createFindByDataname(
+            IconButton,
+            'firstPageButton'
+        );
+
+        it('is disabled when on page 1', () => {
+            const wrapper = setup({
+                currentPage: 1
+            });
+
+            const button = findFirstPageButton(wrapper);
+
+            expect(button.props().isDisabled).toBe(true);
+        });
+
+        it('is enabled when not on page 1', () => {
+            const wrapper = setup({
+                currentPage: 2
+            });
+
+            const button = findFirstPageButton(wrapper);
+
+            expect(button.props().isDisabled).toBe(false);
+        });
+    });
+
+    describe('previousPageButton', () => {
         it('is disabled when on page 1', () => {
             const wrapper = setup({
                 currentPage: 1
@@ -37,14 +64,50 @@ describe('<PagePicker/>', () => {
 
             expect(button.props().isDisabled).toBe(true);
         });
-    });
 
-    describe('previousPageButton', () => {
-        it('', () => {});
+        it('is enabled when not on page 1', () => {
+            const wrapper = setup({
+                currentPage: 2
+            });
+
+            const button = TestUtils.findByDataname(
+                wrapper,
+                IconButton,
+                'firstPageButton'
+            );
+
+            expect(button.props().isDisabled).toBe(false);
+        });
     });
 
     describe('nextPageButton', () => {
-        it('', () => {});
+        it('is disabled when on last page', () => {
+            const wrapper = setup({
+                currentPage: 1
+            });
+
+            const button = TestUtils.findByDataname(
+                wrapper,
+                IconButton,
+                'firstPageButton'
+            );
+
+            expect(button.props().isDisabled).toBe(true);
+        });
+
+        it('is enabled when not on page 1', () => {
+            const wrapper = setup({
+                currentPage: 2
+            });
+
+            const button = TestUtils.findByDataname(
+                wrapper,
+                IconButton,
+                'firstPageButton'
+            );
+
+            expect(button.props().isDisabled).toBe(false);
+        });
     });
 
     describe('lastPageButton', () => {

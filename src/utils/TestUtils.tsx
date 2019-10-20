@@ -26,6 +26,19 @@ class TestUtils {
             .find(`[data-name="${dataname}"]`)
             .find<TProps>(componentType);
     }
+
+    static createFindByDataname<TProps>(
+        componentType: ComponentType<TProps>,
+        dataname: string
+    ) {
+        return (wrapper: ShallowWrapper | ReactWrapper) => {
+            return TestUtils.findByDataname<TProps>(
+                wrapper,
+                componentType,
+                dataname
+            );
+        };
+    }
 }
 
 export default TestUtils;

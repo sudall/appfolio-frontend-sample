@@ -54,6 +54,7 @@ const PagePicker: FunctionComponent<Props> = ({
             />
             {pagesToShow.map(page => (
                 <Button
+                    data-name={`pageButton${page}`}
                     key={page}
                     variantColor={page === currentPage ? 'green' : undefined}
                     onClick={() => onPageChange(page)}

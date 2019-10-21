@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PagePicker from 'components/PagePicker/PagePicker';
 import TestUtils from 'utils/TestUtils';
 import { ComponentProps } from 'react';
+import PagePicker from 'components/PagePicker/PagePicker';
 import { IconButton } from '@chakra-ui/core/dist';
 
 type Props = ComponentProps<typeof PagePicker>;
@@ -51,16 +51,17 @@ describe('<PagePicker/>', () => {
     });
 
     describe('previousPageButton', () => {
+        const findPreviousPageButton = TestUtils.createFindByDataname(
+            IconButton,
+            'previousPageButton'
+        );
+
         it('is disabled when on page 1', () => {
             const wrapper = setup({
                 currentPage: 1
             });
 
-            const button = TestUtils.findByDataname(
-                wrapper,
-                IconButton,
-                'firstPageButton'
-            );
+            const button = findPreviousPageButton(wrapper);
 
             expect(button.props().isDisabled).toBe(true);
         });
@@ -70,47 +71,67 @@ describe('<PagePicker/>', () => {
                 currentPage: 2
             });
 
-            const button = TestUtils.findByDataname(
-                wrapper,
-                IconButton,
-                'firstPageButton'
-            );
+            const button = findPreviousPageButton(wrapper);
 
             expect(button.props().isDisabled).toBe(false);
         });
     });
 
     describe('nextPageButton', () => {
+        const findNextPageButton = TestUtils.createFindByDataname(
+            IconButton,
+            'nextPageButton'
+        );
+
         it('is disabled when on last page', () => {
             const wrapper = setup({
-                currentPage: 1
+                totalPages: 2,
+                currentPage: 2
             });
 
-            const button = TestUtils.findByDataname(
-                wrapper,
-                IconButton,
-                'firstPageButton'
-            );
+            const button = findNextPageButton(wrapper);
 
             expect(button.props().isDisabled).toBe(true);
         });
 
-        it('is enabled when not on page 1', () => {
+        it('is enabled when not on last page', () => {
             const wrapper = setup({
-                currentPage: 2
+                currentPage: 2,
+                totalPages: 3
             });
 
-            const button = TestUtils.findByDataname(
-                wrapper,
-                IconButton,
-                'firstPageButton'
-            );
+            const button = findNextPageButton(wrapper);
 
             expect(button.props().isDisabled).toBe(false);
         });
     });
 
     describe('lastPageButton', () => {
-        it('', () => {});
+        const findLastPageButton = TestUtils.createFindByDataname(
+            IconButton,
+            'lastPageButton'
+        );
+
+        it('is disabled when on last page', () => {
+            const wrapper = setup({
+                currentPage: 2,
+                totalPages: 2
+            });
+
+            const button = findLastPageButton(wrapper);
+
+            expect(button.props().isDisabled).toBe(true);
+        });
+
+        it('is enabled when not on last page', () => {
+            const wrapper = setup({
+                currentPage: 2,
+                totalPages: 3
+            });
+
+            const button = findLastPageButton(wrapper);
+
+            expect(button.props().isDisabled).toBe(false);
+        });
     });
 });

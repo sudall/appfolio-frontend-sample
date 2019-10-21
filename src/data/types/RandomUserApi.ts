@@ -69,4 +69,5 @@ export interface Info {
     results: number;
     page: number;
     version: string;
+    totalUsers: 500;
 }

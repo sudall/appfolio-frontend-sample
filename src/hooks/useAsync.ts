@@ -1,4 +1,5 @@
 import { DependencyList, useCallback, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 type AsyncState = 'idle' | 'pending' | 'completed' | 'error';
 
@@ -28,13 +29,17 @@ function useAsync<TResult>(
                 const result = await asyncFunction();
 
                 if (!canceled) {
-                    setLastResult(result);
-                    setAsyncState('completed');
+                    ReactDOM.unstable_batchedUpdates(() => {
+                        setLastResult(result);
+                        setAsyncState('completed');
+                    });
                 }
             } catch (error) {
                 if (!canceled) {
-                    setLastError(error);
-                    setAsyncState('error');
+                    ReactDOM.unstable_batchedUpdates(() => {
+                        setLastError(error);
+                        setAsyncState('error');
+                    });
                 }
             }
         };

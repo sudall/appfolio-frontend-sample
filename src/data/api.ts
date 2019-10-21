@@ -24,7 +24,9 @@ const api = {
             });
 
             const response = await fetch(`${endpoint}?${query}`);
-            return response.json();
+            const result: GetUsersResult = await response.json();
+            result.info.totalUsers = 500;
+            return result;
         } else {
             // TODO I was running into fetch limits on the randomuser API with this
             //  code, so instead I'm just faking the response.

@@ -1,5 +1,7 @@
+import { GetUsersResult } from 'data/types/RandomUserApi';
+
 const FakeData = {
-    get allUsersResponse() {
+    get allUsersResponse(): GetUsersResult {
         return {
             results: [
                 {
@@ -2159,7 +2161,75 @@ const FakeData = {
                     email: 'aires.alves@example.com'
                 }
             ],
-            info: { seed: 'a', results: 500, page: 1, version: '1.3' }
+            info: {
+                seed: 'a',
+                results: 500,
+                page: 1,
+                version: '1.3',
+                totalUsers: 500
+            }
+        };
+    },
+
+    get getUsersResponse1(): GetUsersResult {
+        return {
+            results: [
+                {
+                    name: { title: 'Ms', first: 'Gordana', last: 'Piontek' },
+                    email: 'gordana.piontek@example.com'
+                },
+                {
+                    name: { title: 'Miss', first: 'Lyna', last: 'Leroy' },
+                    email: 'lyna.leroy@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Bartel', last: 'Sinnige' },
+                    email: 'bartel.sinnige@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Abraham', last: 'Prinz' },
+                    email: 'abraham.prinz@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Albert', last: 'Calvo' },
+                    email: 'albert.calvo@example.com'
+                },
+                {
+                    name: { title: 'Mrs', first: 'Dolores', last: 'Lawson' },
+                    email: 'dolores.lawson@example.com'
+                },
+                {
+                    name: { title: 'Mrs', first: 'Lillian', last: 'Franklin' },
+                    email: 'lillian.franklin@example.com'
+                },
+                {
+                    name: { title: 'Miss', first: 'Victoria', last: 'Suarez' },
+                    email: 'victoria.suarez@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'August', last: 'Sørensen' },
+                    email: 'august.sorensen@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Dorian', last: 'Francois' },
+                    email: 'dorian.francois@example.com'
+                },
+                {
+                    name: { title: 'Mrs', first: 'Sedef', last: 'Aclan' },
+                    email: 'sedef.aclan@example.com'
+                },
+                {
+                    name: { title: 'Miss', first: 'Peppi', last: 'Tuomala' },
+                    email: 'peppi.tuomala@example.com'
+                }
+            ],
+            info: {
+                seed: 'a',
+                results: 12,
+                page: 2,
+                version: '1.3',
+                totalUsers: 500
+            }
         };
     }
 };

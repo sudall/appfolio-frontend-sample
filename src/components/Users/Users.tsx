@@ -3,9 +3,9 @@ import { FunctionComponent, useState } from 'react';
 import {
     Alert,
     AlertIcon,
-    CircularProgress,
     Flex,
     Heading,
+    Spinner,
     Text
 } from '@chakra-ui/core/dist';
 import useAsync from 'hooks/useAsync';
@@ -18,14 +18,12 @@ import UsersTable, {
     SortKey
 } from 'components/UsersTable/UsersTable';
 
-const totalUsers = 500;
-const pageSize = 10;
-
 type Props = {
     getUsers: Api['getUsers'];
+    pageSize?: number;
 };
 
-const Users: FunctionComponent<Props> = ({ getUsers }) => {
+const Users: FunctionComponent<Props> = ({ getUsers, pageSize = 10 }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [sortDirection, setSortDirection] = useState<SortDirection>(
         'unsorted'
@@ -42,7 +40,15 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
 
     const firstItemIndex = (currentPage - 1) * pageSize + 1;
 
-    const totalPages = Math.ceil(totalUsers / pageSize);
+    let totalPages = 0;
+    let totalUsers: number | null = null;
+    if (asyncState.lastResult != null) {
+        totalPages = Math.ceil(
+            asyncState.lastResult.info.totalUsers / pageSize
+        );
+
+        totalUsers = asyncState.lastResult.info.totalUsers;
+    }
 
     return (
         <Stack
@@ -59,10 +65,10 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
                 shadow={'lg'}
             >
                 <Stack isInline alignItems={'center'}>
-                    <Heading>Users ({totalUsers})</Heading>
-                    {asyncState.state === 'pending' && (
-                        <CircularProgress size={'2xl'} isIndeterminate />
-                    )}
+                    <Heading>{`Users${
+                        totalUsers != null ? ` (${totalUsers})` : ``
+                    }`}</Heading>
+                    {asyncState.state === 'pending' && <Spinner />}
                 </Stack>
                 {asyncState.state === 'error' && asyncState.lastError != null && (
                     <Alert status='error'>
@@ -74,6 +80,7 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
                     asyncState.lastResult.results != null && (
                         <Stack>
                             <UsersTable
+                                data-name={'usersTable'}
                                 onSort={(sortBy, sortDirection) => {
                                     setSortBy(sortBy);
                                     setSortDirection(sortDirection);
@@ -86,13 +93,14 @@ const Users: FunctionComponent<Props> = ({ getUsers }) => {
                                 }}
                                 data={asyncState.lastResult.results}
                             />
-                            <Text color={'gray.400'}>
+                            <Text data-name={'pageInfoText'} color={'gray.400'}>
                                 {`Displaying: ${firstItemIndex}-${firstItemIndex +
                                     asyncState.lastResult.info.results -
                                     1} of ${totalUsers}`}
                             </Text>
                             <Flex justifyContent={'center'}>
                                 <PagePicker
+                                    data-name={'pagePicker'}
                                     totalPages={totalPages}
                                     currentPage={currentPage}
                                     onPageChange={newPage => {

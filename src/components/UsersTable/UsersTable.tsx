@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { GetUsersResult } from 'data/types/RandomUserApi';
-import { Box, BoxProps, Button, ButtonProps, Link } from '@chakra-ui/core/dist';
+import { Box, BoxProps, Link } from '@chakra-ui/core/dist';
 import { FC } from 'react';
+import SortButton from 'components/SortButton/SortButton';
 
 export type SortDirection = 'unsorted' | 'ascending' | 'descending';
 export type SortKey = 'first' | 'last' | 'email';
@@ -14,83 +15,44 @@ type Props = {
     };
 } & BoxProps;
 
-const TableHeaderCell: FC<BoxProps> = props => (
-    <Box p={2} {...props} as={'th'} />
-);
-const TableDataCell: FC<BoxProps> = props => <Box p={2} {...props} as={'td'} />;
-
-const SortableTableHeader: FC<{
-    sortKey: SortKey;
-    sort: Props['sort'];
-    onSort: Props['onSort'];
-}> = ({ onSort, children, sort, sortKey }) => {
-    const sortDirectionToPropsMap: Record<
-        SortDirection,
-        Partial<ButtonProps>
-    > = {
-        unsorted: {
-            rightIcon: 'arrow-up-down',
-            'aria-label': 'sort ascending',
-            onClick: () => {
-                onSort(sortKey, 'ascending');
-            }
-        },
-        descending: {
-            rightIcon: 'chevron-down',
-            'aria-label': 'sort ascending',
-            onClick: () => {
-                onSort(sortKey, 'ascending');
-            }
-        },
-        ascending: {
-            rightIcon: 'chevron-up',
-            'aria-label': 'sort descending',
-            onClick: () => {
-                onSort(sortKey, 'descending');
-            }
-        }
-    };
-
-    const buttonProps =
-        sortKey === sort.sortBy
-            ? sortDirectionToPropsMap[sort.sortDirection]
-            : sortDirectionToPropsMap['unsorted'];
-
-    return <Button {...buttonProps}>{children}</Button>;
-};
+const TableHeader: FC<BoxProps> = props => <Box p={2} {...props} as={'th'} />;
+const TableData: FC<BoxProps> = props => <Box p={2} {...props} as={'td'} />;
 
 function UsersTable({ data, onSort, sort, ...boxProps }: Props) {
     return (
         <Box as={'table'} width={'100%'} {...boxProps}>
             <thead>
                 <Box as={'tr'} textAlign={'left'} backgroundColor={'gray.900'}>
-                    <TableHeaderCell>
-                        <SortableTableHeader
+                    <TableHeader>
+                        <SortButton
                             onSort={onSort}
-                            sort={sort}
+                            sortDirection={sort.sortDirection}
+                            sortBy={sort.sortBy}
                             sortKey={'first'}
                         >
                             First
-                        </SortableTableHeader>
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                        <SortableTableHeader
+                        </SortButton>
+                    </TableHeader>
+                    <TableHeader>
+                        <SortButton
                             onSort={onSort}
-                            sort={sort}
+                            sortDirection={sort.sortDirection}
+                            sortBy={sort.sortBy}
                             sortKey={'last'}
                         >
                             Last
-                        </SortableTableHeader>
-                    </TableHeaderCell>
-                    <TableHeaderCell>
-                        <SortableTableHeader
+                        </SortButton>
+                    </TableHeader>
+                    <TableHeader>
+                        <SortButton
                             onSort={onSort}
-                            sort={sort}
+                            sortDirection={sort.sortDirection}
+                            sortBy={sort.sortBy}
                             sortKey={'email'}
                         >
                             Email
-                        </SortableTableHeader>
-                    </TableHeaderCell>
+                        </SortButton>
+                    </TableHeader>
                 </Box>
             </thead>
             <tbody>
@@ -103,13 +65,13 @@ function UsersTable({ data, onSort, sort, ...boxProps }: Props) {
                                 index % 2 === 0 ? 'gray.800' : 'gray.700'
                             }
                         >
-                            <TableDataCell>{item.name.first}</TableDataCell>
-                            <TableDataCell>{item.name.last}</TableDataCell>
-                            <TableDataCell>
+                            <TableData>{item.name.first}</TableData>
+                            <TableData>{item.name.last}</TableData>
+                            <TableData>
                                 <Link href={`mailto:${item.email}`}>
                                     {item.email}
                                 </Link>
-                            </TableDataCell>
+                            </TableData>
                         </Box>
                     );
                 })}

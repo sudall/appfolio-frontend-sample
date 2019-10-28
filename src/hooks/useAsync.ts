@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 type AsyncState = 'idle' | 'pending' | 'completed' | 'error';
@@ -10,8 +10,7 @@ type UseAsyncState<TResult> = {
 };
 
 function useAsync<TResult>(
-    asyncFunction: () => Promise<TResult>,
-    dependencies: DependencyList = []
+    asyncFunction: () => Promise<TResult>
 ): [UseAsyncState<TResult>, () => void] {
     const [asyncState, setAsyncState] = useState<AsyncState>('idle');
     const [lastResult, setLastResult] = useState<TResult | null>(null);
@@ -49,7 +48,7 @@ function useAsync<TResult>(
         return () => {
             canceled = true;
         };
-    }, [asyncState, asyncFunction, ...dependencies]);
+    }, [asyncState, asyncFunction]);
 
     const trigger = useCallback(() => {
         if (asyncState !== 'pending') {

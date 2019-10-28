@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import {
     Alert,
     AlertIcon,
@@ -30,9 +30,16 @@ const Users: FunctionComponent<Props> = ({ getUsers, pageSize = 10 }) => {
     );
     const [sortBy, setSortBy] = useState<SortKey>('first');
 
-    const [asyncState, trigger] = useAsync(async () => {
-        return getUsers({ page: currentPage, pageSize, sortBy, sortDirection });
-    }, [getUsers, currentPage, pageSize, sortBy, sortDirection]);
+    const [asyncState, trigger] = useAsync(
+        useCallback(async () => {
+            return getUsers({
+                page: currentPage,
+                pageSize,
+                sortBy,
+                sortDirection
+            });
+        }, [currentPage, getUsers, pageSize, sortBy, sortDirection])
+    );
 
     useEffectOnce(() => {
         trigger();

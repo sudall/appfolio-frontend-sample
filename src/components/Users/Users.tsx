@@ -31,8 +31,8 @@ const Users: FunctionComponent<Props> = ({ getUsers, pageSize = 10 }) => {
     const [sortBy, setSortBy] = useState<SortKey>('first');
 
     const [asyncState, trigger] = useAsync(async () => {
-        return getUsers(currentPage, pageSize, sortBy, sortDirection);
-    }, [currentPage]);
+        return getUsers({ page: currentPage, pageSize, sortBy, sortDirection });
+    }, [getUsers, currentPage, pageSize, sortBy, sortDirection]);
 
     useEffectOnce(() => {
         trigger();

@@ -2231,6 +2231,44 @@ const FakeData = {
                 totalUsers: 500
             }
         };
+    },
+
+    get getUsersResponse2(): GetUsersResult {
+        return {
+            results: [
+                {
+                    name: { title: 'Ms', first: 'Gordana', last: 'Piontek' },
+                    email: 'gordana.piontek@example.com'
+                },
+                {
+                    name: { title: 'Miss', first: 'Lyna', last: 'Leroy' },
+                    email: 'lyna.leroy@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Bartel', last: 'Sinnige' },
+                    email: 'bartel.sinnige@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Abraham', last: 'Prinz' },
+                    email: 'abraham.prinz@example.com'
+                },
+                {
+                    name: { title: 'Mr', first: 'Albert', last: 'Calvo' },
+                    email: 'albert.calvo@example.com'
+                },
+                {
+                    name: { title: 'Mrs', first: 'Dolores', last: 'Lawson' },
+                    email: 'dolores.lawson@example.com'
+                }
+            ],
+            info: {
+                seed: 'a',
+                results: 6,
+                page: 1,
+                version: '1.3',
+                totalUsers: 500
+            }
+        };
     }
 };
 

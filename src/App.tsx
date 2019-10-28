@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { CSSReset, DarkMode, theme, ThemeProvider } from '@chakra-ui/core/dist';
-import api from 'data/api';
 import Users from 'components/Users/Users';
+import getApi from 'data/api';
 
 const App: FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <DarkMode>
                 <CSSReset />
-                <Users getUsers={api.getUsers} />
+                <Users getUsers={getApi(fetch).getUsers} />
             </DarkMode>
         </ThemeProvider>
     );
